@@ -1,0 +1,21 @@
+class KthLargest:
+    
+    def __init__(self, k: int, nums: List[int]):
+        self.minheap, self.k = [], k
+        for i in range(len(nums)):
+            if len(self.minheap) < k:
+                heappush(self.minheap, nums[i])
+            else:
+                heappushpop(self.minheap, nums[i])
+
+    def add(self, val: int) -> int:
+        if len(self.minheap) < self.k:
+            heappush(self.minheap, val)
+        else:
+            heappushpop(self.minheap, val)
+
+        return self.minheap[0]
+        
+# Your KthLargest object will be instantiated and called as such:
+# obj = KthLargest(k, nums)
+# param_1 = obj.add(val)
