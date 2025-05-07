@@ -1,0 +1,27 @@
+class Solution:
+    def getOrder(self, tasks: List[List[int]]) -> List[int]:
+        alltasks = [(tasks[i][0], tasks[i][1], i) for i in range(len(tasks))]
+        alltasks = sorted(alltasks)
+
+        i, time, ans, availableTasks = 0, 0, [], []
+        while i < len(alltasks):
+            while i < len(alltasks) and alltasks[i][0] <= time:
+                etime, ptime, index = alltasks[i]
+                heappush(availableTasks, (ptime, index))
+                i += 1
+
+            if not availableTasks:
+                time = alltasks[i][0]
+                etime, ptime, index = alltasks[i]
+                heappush(availableTasks, (ptime, index))
+                i += 1
+
+            ptime, index = heappop(availableTasks)
+            time += ptime
+            ans.append(index)
+        
+        while availableTasks:
+            ptime, index = heappop(availableTasks)
+            ans.append(index)
+        
+        return ans
