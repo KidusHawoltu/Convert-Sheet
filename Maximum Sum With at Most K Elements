@@ -1,0 +1,11 @@
+class Solution:
+    def maxSum(self, grid: List[List[int]], limits: List[int], k: int) -> int:
+        maxheap, n, m = [], len(grid), len(grid[0])
+        for i in range(n):
+            heap = []
+            for e in grid[i]: heappush(heap, -1 * e)
+            for _ in range(min(m, limits[i])): heappush(maxheap, heappop(heap))
+        
+        ans = 0
+        for _ in range(k): ans -= heappop(maxheap)
+        return ans
