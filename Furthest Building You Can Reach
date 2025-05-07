@@ -1,0 +1,15 @@
+class Solution:
+    def furthestBuilding(self, heights: List[int], bricks: int, ladders: int) -> int:
+        differences, total = [], 0
+        ans = 0
+        while ans < len(heights) - 1 and ladders >= 0:
+            if heights[ans] < heights[ans + 1]:
+                total += heights[ans + 1] - heights[ans]
+                if total > bricks:
+                    total += heappushpop(differences, heights[ans] - heights[ans + 1])
+                    ladders -= 1
+                else:
+                    heappush(differences, heights[ans] - heights[ans + 1])
+            if ladders >= 0: ans += 1
+        
+        return ans
